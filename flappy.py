@@ -9,7 +9,6 @@ screen=pygame.display.set_mode((1152,500))
 #setting a clock for frame rate
 clock=pygame.time.Clock()
 
-
 #bird movement
 gravity=0.18
 bird_move=0
@@ -21,7 +20,7 @@ def move_base():
 	screen.blit(base_surf,(base_pos,430))
 	screen.blit(base_surf,(base_pos+576,430))
 	screen.blit(base_surf,(base_pos+1152,430))
-
+	
 def create_pipe():
 	hd=random.choice(difference)
 	pipe_pos=random.choice(pipe_height)
@@ -61,7 +60,6 @@ def bird_animation():
 	return new_bird,new_bird_rect
 
 def display_score(game_state):
-
 	if game_state=='active':
 		score_surf=game_font.render(f'Score: {int(score)}',True,(255,255,255))
 		score_rect=score_surf.get_rect(center=(576,50))
@@ -85,17 +83,11 @@ def remove_pipes(pipes):
 		if pipe.centerx<=-35:
 			pipes.remove(pipe)
 			
-			
-
-		
-	
-	
-	
-
 #window title
 pygame.display.set_caption('Flappy Bird')
 bg_surf=pygame.image.load('D:/Chinmay/pics/bg3.png').convert()
 bg_surf=pygame.transform.scale2x(bg_surf)
+
 base_surf=pygame.image.load('D:/Chinmay/pics/base.png').convert()
 base_surf=pygame.transform.scale2x(base_surf)
 base_pos=0
@@ -105,12 +97,10 @@ bird_down_surf=pygame.image.load('D:/Chinmay/pics/yellowbirddown.png').convert_a
 bird_up_surf=pygame.image.load('D:/Chinmay/pics/yellowbirdup.png').convert_alpha()
 bird_frames=[bird_down_surf,bird_mid_surf,bird_up_surf]
 bird_index=0
-
 bird_surf=bird_frames[bird_index]
 bird_rect=bird_surf.get_rect(center=(100,250))
 
 game_font=pygame.font.Font('04B_19.ttf',40)
-
 BIRDFLAP=pygame.USEREVENT+1
 pygame.time.set_timer(BIRDFLAP,200)
 
@@ -119,15 +109,14 @@ pygame.time.set_timer(BIRDFLAP,200)
 pipe_surf=pygame.image.load('D:/Chinmay/pics/redpipe.png').convert()
 pipe_surf=pygame.transform.scale2x(pipe_surf)
 pipe_list=[]
+
 CREATEPIPE=pygame.USEREVENT
 pygame.time.set_timer(CREATEPIPE,750)
 pipe_height=[180,250,275,350]
 
 msg_surf=pygame.image.load('D:/Chinmay/pics/message.png').convert_alpha()
 msg_rect=msg_surf.get_rect(center=(576,210))
-
 difference=[130,140,150]
-
 
 #Game Loop
 while True:
@@ -135,7 +124,6 @@ while True:
 		if event.type==pygame.QUIT :
 			pygame.quit()
 			sys.exit()
-
 		if event.type==pygame.KEYDOWN:
 			if event.key==pygame.K_SPACE and run_game :
 				bird_move=0
@@ -146,14 +134,8 @@ while True:
 				bird_rect.center=(100,180)
 				bird_move=0
 				score=0
-
-
-
 		if event.type==CREATEPIPE:
 			pipe_list.extend(create_pipe())
-
-			
-
 		if event.type==BIRDFLAP:
 			if bird_index<2:
 				bird_index+=1
@@ -161,11 +143,6 @@ while True:
 				bird_index=0
 
 			bird_surf,bird_rect=bird_animation()	
-				
-			
-
-
-			
 	screen.blit(bg_surf,(0,0))		
 	base_pos-=3
 	if run_game:
@@ -186,19 +163,8 @@ while True:
 		screen.blit(msg_surf,msg_rect)
 		high_score=update_score(score,high_score)
 		display_score('over')
-		
-	
-    
-    	
-
-    	
-    	
 	move_base()
 	if base_pos-576<=-576:
 		base_pos=0
-
-
 	pygame.display.update()
 	clock.tick(125)
-
-
